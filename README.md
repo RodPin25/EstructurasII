@@ -1,5 +1,5 @@
-#Proyecto de Estructuras Lógicas II
-##Reloj Decimal-Binario-Hexadecimal
+# Proyecto de Estructuras Lógicas II
+## Reloj Decimal-Binario-Hexadecimal
 
 **Grupo de: Rafael Antillon, Génesis Gonzalez y Sebastián Rodas**
 

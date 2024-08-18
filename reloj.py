@@ -86,14 +86,20 @@ def new_hour():
     global clock_running
     clock_running = False  # Detiene la función update_clock
 
-    current_time = datetime.now()  # Obtengo la nueva fecha
+    new_time = None  # Initialize new_time to None
+    current_time = datetime.now()
+    
     minutes_placed = textBox1.get("1.0", "end-1c")  # Obtengo los minutos que ingresó el usuario
 
     try:  # Si es posible hacer la conversión de los números ingresados de string a int, realiza el siguiente código
         minutes_placed = int(minutes_placed)
-        new_time = current_time + timedelta(minutes=minutes_placed)  # Sumo los minutos
+        if new_time is None:
+            new_time = current_time + timedelta(minutes=minutes_placed)  # Sumo los minutos
+        else:
+            new_time = new_time + timedelta(minutes=minutes_placed)
         
-        new_time=new_time+timedelta(seconds=1)
+        new_time = new_time + timedelta(seconds=1)
+
 
         # La nueva hora convertida a binario
         seconds_binary = convert_binary(new_time.second)
@@ -207,3 +213,4 @@ update_clock()
 
 #El mainloop de la ventana para que se mantenaga abierta
 root.mainloop() 
+

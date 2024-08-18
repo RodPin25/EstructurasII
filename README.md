@@ -24,4 +24,4 @@ El reloj tiene ya la capacidad de poder sumarle o restarle la hora dependiendo d
 
 El problema se presento a la hora de querer realizar alguna otra operación a la nueva hora, es decir que si ya se realizo alguna suma o alguna resta a la hora actual, no se podrá ingresar un segundo numero para sumarlo o restarlo por que el reloj se quedara estático y no se seguira actualizando a cada segundo.
 
-![mood:](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTteIlhV_3f90aLye_eiJ5yaHVnY9GnqIuwPw&s){: .center}
+![mood:](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTteIlhV_3f90aLye_eiJ5yaHVnY9GnqIuwPw&s){: center}

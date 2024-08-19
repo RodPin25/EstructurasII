@@ -10,16 +10,32 @@ bg_color="#3a3c51"
 #Variable que lleva el control de que funcion esta activa
 clock_running=True
 
+current_time=time.strftime("%H:%M:%S") #obtengo la hora actual en formato de Hora:Minuto:Segundo
+current_sec=time.strftime("%S") #Obtengo los segundos actuales
+current_min=time.strftime("%M") #Obtengo los minutos actuales
+current_hour=time.strftime("%H") #Obtengo la hora actual
+
 #Funcion que actualizara el reloj
 def update_clock():
+    global current_time, current_hour, current_min, current_sec
 
     if not clock_running:
         return
+    
+    #current_time=time.strftime("%H:%M:%S") #obtengo la hora actual en formato de Hora:Minuto:Segundo
+    #current_sec=time.strftime("%S") #Obtengo los segundos actuales
+    #current_min=time.strftime("%M") #Obtengo los minutos actuales
+    #current_hour=time.strftime("%H") #Obtengo la hora actual
 
-    current_time=time.strftime("%H:%M:%S") #obtengo la hora actual en formato de Hora:Minuto:Segundo
-    current_sec=time.strftime("%S") #Obtengo los segundos actuales
-    current_min=time.strftime("%M") #Obtengo los minutos actuales
-    current_hour=time.strftime("%H") #Obtengo la hora actual
+    current_time = datetime.strptime(current_time, "%H:%M:%S") # CONVERTIR A OBJETO DATETIME
+    current_time = current_time + timedelta(seconds=1) # SUMAR 1 SEGUNDO PARA QUE AVANCE EL RELOJ
+    
+    current_sec = int(datetime.strftime(current_time, "%S"))
+    current_min = int(datetime.strftime(current_time, "%M"))
+    current_hour = int(datetime.strftime(current_time, "%H"))
+    
+    current_time = datetime.strftime(current_time, "%H:%M:%S") # CONVERTIR DE OBJETO DATETIME A TEXTO
+
     if int(current_sec)!=0: #Si los segundos actuales no son cero
         current_sec_binary=convert_binary(int(current_sec)) #Entonces convierto esos segundos a binarios y hexadecimales
         current_sec_hexadecimal=hexa_conversion(int(current_sec))
@@ -48,7 +64,7 @@ def update_clock():
     label.configure(text=current_time) #Hora en decimal
     label2.configure(text=current_binary_hour) #Hora en binario 
     label3.configure(text=current_hexadecimal_hour) #Hora en hexadecimal
-    root.after(1000,update_clock) 
+    root.after(1000, update_clock) 
     """
         la funcion root.after() sirve para que la funcion sea recursiva y se mande a 
         llamar pasado un periodo de tiempo, en este caso 1 segundo
@@ -83,24 +99,26 @@ def change_config():
 
 #Funcion que encuentra la nueva hora
 def new_hour():
-    global clock_running
+    global clock_running, current_time, current_sec, current_min, current_hour
+    
     clock_running = False  # Detiene la función update_clock
 
-    new_time = None  # Initialize new_time to None
-    current_time = datetime.now()
+    new_time = None  
+    current_time = datetime.strptime(current_time, '%H:%M:%S')
     
     minutes_placed = textBox1.get("1.0", "end-1c")  # Obtengo los minutos que ingresó el usuario
-
+    textBox1.delete("1.0","end-1c") # LIMPIAR EL TEXTBOX1 PARA QUE QUEDE VACIO
+    
     try:  # Si es posible hacer la conversión de los números ingresados de string a int, realiza el siguiente código
         minutes_placed = int(minutes_placed)
-        if new_time is None:
-            new_time = current_time + timedelta(minutes=minutes_placed)  # Sumo los minutos
-        else:
-            new_time = new_time + timedelta(minutes=minutes_placed)
+        new_time = current_time + timedelta(minutes=minutes_placed)  # Sumo los minutos
+        #if new_time is None:
+            #new_time = current_time + timedelta(minutes=minutes_placed)  # Sumo los minutos
+        #else:
+            #new_time = new_time + timedelta(minutes=minutes_placed)
         
-        new_time = new_time + timedelta(seconds=1)
-
-
+        #new_time = new_time + timedelta(seconds=1)
+        
         # La nueva hora convertida a binario
         seconds_binary = convert_binary(new_time.second)
         minutes_binary = convert_binary(new_time.minute)
@@ -111,20 +129,25 @@ def new_hour():
         minutes_hexadecimal = hexa_conversion(new_time.minute)
         hours_hexadecimal = hexa_conversion(new_time.hour)
 
+        current_time = datetime.strftime(new_time, '%H:%M:%S') # SE REASIGNA LA NUEVA HORA
+
         # Agrupo en un string las horas convertidas
         new_binary_hour = f"{hours_binary}:{minutes_binary}:{seconds_binary}"
         new_hexadecimal_hour = f"{hours_hexadecimal}:{minutes_hexadecimal}:{seconds_hexadecimal}"
 
-        label.configure(text=new_time.strftime("%H:%M:%S"))
+        label.configure(text=current_time)
         label2.configure(text=new_binary_hour)
         label3.configure(text=new_hexadecimal_hour)
+
+        clock_running = True
+        minutes_placed=0
+        #root.after(1000, update_clock)  # A cada segundo la función se vuelve recursiva
         
     except ValueError:  # En caso de que no se pueda realizar algo del código anterior, realiza esto
-        print("No se pudo realizar la conversión")
-        return
-
-    minutes_placed=0
-    root.after(1000, new_hour)  # A cada segundo la función se vuelve recursiva
+        #print("No se pudo realizar la conversión")
+        #return
+        current_time = datetime.strftime(current_time, '%H:%M:%S') # SE CONVIERTE A TEXTO NUEVAMENTE
+        clock_running = True
 
 #Funcion que convertira los nuemeros de decimales a binarios por medio de la division sucesiva por dos
 def convert_binary(num):

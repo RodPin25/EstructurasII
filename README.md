@@ -16,14 +16,15 @@ También debe de ser capaz de poder sumarle a la hora actual y en tiempo real la
 |--------------|--------------|
 | -> Toma y actualización de la hora actual **✓** | -> Suma o resta de la nueva hora **✓** |
 | -> Conversión en tiempo real de la hora a binario **✓** | -> Conversión de la nueva hora a binario y hexadecimal **✓** |
-| -> Conversión en tiempo real de la hora a hexadecimal **✓** | -> Actualización de la nueva hora a cada segundo |
+| -> Conversión en tiempo real de la hora a hexadecimal **✓** | -> Actualización de la nueva hora a cada segundo **✓** |
 
 ## Problemas presentados en el ultimo commit
 
-El reloj tiene ya la capacidad de poder sumarle o restarle la hora dependiendo de los minutos que ingrese el usuario.
+**El programa ya no presento errores de funcionamiento**
 
-El problema se presento a la hora de querer realizar alguna otra operación a la nueva hora, es decir que si ya se realizo alguna suma o alguna resta a la hora actual, no se podrá ingresar un segundo numero para sumarlo o restarlo por que el reloj se quedara estático y no se seguira actualizando a cada segundo.
+Queda pendiente la estilizacion adecuada del programa y la implementación de la interfaz gráfica para el usuario.
+
 
 <p align="center">
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTteIlhV_3f90aLye_eiJ5yaHVnY9GnqIuwPw&s" alt="mood:">
+    <img src="https://preview.redd.it/6y5zkdpot9j81.png?auto=webp&s=0ff53a2ea4ad1bc781f71ad20afd8f5cb1c39e5f" alt="mood:">
 </p>
